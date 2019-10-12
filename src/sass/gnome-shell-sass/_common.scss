@@ -25,10 +25,11 @@ stage {
 /* Buttons */
 .button {
   border-radius: 6px;
+  min-height: 16px;
   border: none;
   margin-top: 0.5em;
   padding: 4px 32px;
-  color: #DBDEE0;
+  color: $fg_color;
   font-weight: bold;
   background-color: transparent;
   background-gradient-direction: none;
@@ -38,10 +39,10 @@ stage {
   text-shadow: none;
   icon-shadow: none;
 
-  &:hover, &:focus {
-    color: white;
+  &:hover, &:focus, &:active {
+    color: $fg_color;
     border: none;
-    background-color: rgba(white, 0.1);
+    background-color: transparentize($highlight_color, .8);
     background-gradient-direction: none;
     background-gradient-start: none;
     background-gradient-end: none;
@@ -51,22 +52,10 @@ stage {
   }
 
   &:insensitive {
-    color: rgba(white, 0.3);
+    color: rgba($fg_color, 0.3);
     border: none;
     background-color: transparent;
     background-gradient-direction: none;
-    box-shadow: none;
-    text-shadow: none;
-    icon-shadow: none;
-  }
-
-  &:active {
-    color: white;
-    border: none;
-    background-color: rgba(black, 0.1);
-    background-gradient-direction: none;
-    background-gradient-start: rgba(black, 0.1);
-    background-gradient-end: rgba(black, 0.1);
     box-shadow: none;
     text-shadow: none;
     icon-shadow: none;
@@ -82,7 +71,8 @@ stage {
   background-color: $secondary_color;
   box-shadow: none;
   font-weight: bold;
-  box-shadow: inset 0 -4px 0 transparentize($bg_color, .6);
+  box-shadow: inset 0 -4px 0 transparentize($bg_color, if($variant == 'light', 1, .6));
+  margin: 0;
 
   &:focus { text-shadow: 0 1px 2px $primary_color; }
 
@@ -246,9 +236,7 @@ StScrollBar {
   font-size: 110%;
 }
 
-.lightbox {
-  background-color: $secondary_color;
-}
+.lightbox { background-color: black; }
 
 .flashspot {
   background-color: $bg_color;
@@ -512,7 +500,7 @@ StScrollBar {
   }
 
   .message-dialog-title {
-    color: darken($osd_fg_color, 25%);
+    color: $fg_color;
   }
 }
 
@@ -522,7 +510,10 @@ StScrollBar {
 
 .prompt-dialog-password-box {
   spacing: 1em;
-  padding-bottom: 1em;
+}
+
+.prompt-dialog-pim-box {
+  spacing: 1em;
 }
 
 .prompt-dialog-error-label {
@@ -543,6 +534,19 @@ StScrollBar {
 .prompt-dialog-null-label {
   font-size: 10pt;
   padding: 0;
+}
+
+.prompt-dialog-grid {
+  spacing-rows: 15px;
+  spacing-columns: 1em;
+}
+
+.prompt-dialog-keyfiles-box {
+  spacing: 1em;
+}
+
+.prompt-dialog-button.button {
+  padding: 8px;
 }
 
 /* Polkit Dialog */
@@ -624,7 +628,7 @@ StScrollBar {
   }
 
   .message-dialog-title {
-    color: darken($osd_fg_color, 25%);
+    color: $fg_color;
   }
 }
 
@@ -649,6 +653,8 @@ StScrollBar {
 
 .popup-menu {
   min-width: 15em;
+  color: $fg_color;
+  border-color: transparent;
 
   .popup-menu-arrow {}
 
@@ -665,17 +671,20 @@ StScrollBar {
     spacing: 6px;
 
     &:ltr { padding: .4em 1.75em .4em 0em; }
+
     &:rtl { padding: .4em 0em .4em 1.75em; }
+
     &:checked {
       background-color: rgba($highlight_color, .1);
       box-shadow: none;
       font-weight: bold;
-      border-radius: 6px 6px 0 0!important;
+      color: $fg_color;
+      border-radius: 6px 6px 0 0 !important;
     }
 
     &.selected, &:active {
       background-color: rgba($highlight_color, .1);
-      color: $fg_color;
+      color: $fg_color !important;
       border-radius: 6px;
     }
 
@@ -713,7 +722,7 @@ StScrollBar {
   -arrow-base: 0;
   -arrow-rise: 0;
   -arrow-box-shadow: none;
-  margin: .3em if($full-panel == 'true', .6em, .8em);
+  margin: if($full-panel == 'true', .2em, .45em);
   background-color: transparentize($bg_color, .6);
   box-shadow: 0 2px 4px -6px black;
   border-radius: 9px;
@@ -728,6 +737,12 @@ StScrollBar {
   border-bottom-style: solid;
 }
 
+.rename-folder-popup-box {
+  spacing: 6px;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
 // Background menu
 .background-menu {
   -boxpointer-gap: 0px;
@@ -738,6 +753,19 @@ StScrollBar {
 - odd thing for styling App menu when apparently not running under shell. Light Adwaita styled
   app menu inside the main app window itself rather than the top bar
 */
+
+/*************
+ * App Icons *
+ *************/
+/* Outline for low res icons */
+.lowres-icon {
+  icon-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Drapshadow for large icons */
+.icon-dropshadow {
+  icon-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
 
 /* OSD */
 .osd-window {
@@ -766,7 +794,7 @@ StScrollBar {
   }
 
   .level-bar {
-    background-color: $osd_fg_color;
+    background-color: $fg_color;
     border-radius: 6px;
   }
 
@@ -876,7 +904,8 @@ StScrollBar {
   spacing: 8px;
 }
 
-.ws-switcher-active-up, .ws-switcher-active-down {
+.ws-switcher-active-up, .ws-switcher-active-down,
+.ws-switcher-active-left, .ws-switcher-active-right {
   height: 30px;
   background-color: $color1;
   box-shadow: $box-shadow;
@@ -911,7 +940,7 @@ StScrollBar {
 
 /* TOP BAR */
 #panelBox {
-  padding: if($full-panel == 'true', 0, .35em .8em);
+  padding: if($full-panel == 'true', 0, .35em .9em);
   background: transparent;
 }
 
@@ -925,6 +954,9 @@ StScrollBar {
   color: $panel_font_color;
   background: $panel_background_color;
   background-gradient-direction: none;
+  transition-duration: 200ms;
+
+  &:overview { background: transparent; }
 
   &.unlock-screen,
   &.login-screen,
@@ -1281,6 +1313,7 @@ StScrollBar {
   height: 1.8em;
   padding: 0.5em 0 0;
   margin: 6px;
+  background-color: transparent;
   color: rgba($fg_color, .4);
 }
 
@@ -1424,6 +1457,7 @@ StScrollBar {
 }
 
 // a little unstructured mess:
+// UNTIL GNOME 3.32
 .system-switch-user-submenu-icon, .system-switch-user-submenu-icon.default-icon {
   &, &.default-icon {
     icon-size: 1.091em;
@@ -1503,6 +1537,14 @@ StScrollBar {
 
 .ripple-box:rtl { border-radius: 0 0 0 52px; }
 
+.ripple-pointer-location {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px 25px 25px 25px; // radius the size of the box give us the curve
+  background-color: lighten(transparentize($secondary_color, 0.7), 30%);
+  box-shadow: 0 0 2px 2px lighten($secondary_color, 20%);
+}
+
 // just a simple change to the border radius position
 
 // not really top bar only
@@ -1536,6 +1578,16 @@ StScrollBar {
     background-image: url("assets/close-window-active.svg");
   }
 }
+
+// Pointer accessibility notifications
+.pie-timer {
+  width: 60px;
+  height: 60px;
+  -pie-border-width: 3px;
+  -pie-border-color: $secondary_color;
+  -pie-background-color: lighten(transparentize($secondary_color, 0.7), 40%);
+}
+
 
 /* NETWORK DIALOGS */
 
@@ -1630,8 +1682,9 @@ StScrollBar {
 }
 
 .window-clone-border {
-  border: 6px solid white;
+  border: 5px solid white;
   border-radius: 6px;
+  box-shadow: inset 0 0 0 2px white;
 }
 
 .window-caption {
@@ -1641,17 +1694,18 @@ StScrollBar {
   border-radius: 6px;
   padding: 4px 12px;
   -shell-caption-spacing: 12px;
+  box-shadow: $box-shadow;
 }
 
 //search entry
 .search-entry {
   width: 21em;
   border: none;
-  color: white;
-  caret-color: black;
+  color: $osd_fg_color;
+  caret-color: $osd_fg_color;
   caret-size: .1em;
   text-shadow: 0px 1px 2px rgba(black, 0.9);
-  background-color: rgba(white, 0.2);
+  background-color: $osd_bg_color;
   font-weight: bold;
   background-gradient-direction: none;
   padding: .63em .81em;
@@ -1659,16 +1713,19 @@ StScrollBar {
   box-shadow: none;
   transition-duration: 200ms;
   font-size: 1.1em;
+  selection-background-color: $osd_hover_fg_color;
+  selected-color: opacify($osd_bg_color, 1);
 
   &:focus, &:hover {
     font-weight: 400;
-    background-color: white;
-    color: black;
+    background-color: rgba($osd_bg_color, 1);
+    color: $osd_hover_fg_color !important;
+    caret-color: $osd_hover_fg_color;
     box-shadow: none;
     text-shadow: none;
 
     .search-entry-icon {
-      color: black;
+      color: $osd_hover_fg_color !important;
       icon-shadow: none;
     }
   }
@@ -1684,11 +1741,13 @@ StScrollBar {
 
 //search results
 
+// UNTIL GNOME 3.32
 #searchResultsBin {
   max-width: 1000px;
 }
 
 #searchResultsContent {
+  max-width: 1000px;
   padding-left: 20px;
   padding-right: 20px;
   spacing: 16px;
@@ -1814,29 +1873,31 @@ StScrollBar {
 
 .app-view-controls { //favorties | all toggle container
   padding-bottom: 32px;
+  width: 18em;
 }
 
 .app-view-control { //favorties | all toggle button
   background-gradient-direction: none;
-  background-color: rgba(white, 0.2);
+  background-color: $osd_bg_color;
   padding: .36em 1.5em;
   border-width: 0;
-  color: white;
+  color: $osd_fg_color;
   box-shadow: none;
   font-weight: bold;
   margin: 0;
 
   &:hover {
-    background-color: rgba(white, 0.3);
+    background-color: opacify($osd_bg_color, 0.1) !important;
     border-width: 0;
     border: transparent;
     box-shadow: none;
+    color: $osd_fg_color;
   }
 
-  &:checked {
-    color: black;
+  &:checked, &:active {
+    color: $osd_hover_fg_color;
     background-gradient-direction: none;
-    background-color: white;
+    background-color: opacify($osd_bg_color, 1) !important;
     box-shadow: none;
     text-shadow: none;
     icon-shadow: none;
@@ -1859,13 +1920,9 @@ StScrollBar {
 .list-search-result {
   @extend %icon_tile;
 
-  &:active, &:checked {
-    background-color: transparentize(darken($osd_bg_color, 10%), .1);
-  }
-
-  &:focus, &:selected, &:hover {
-    background-color: transparentize($osd_fg_color, .9);
-    transition-duration: 200ms;
+  &:active, &:checked, &:active, &:checked, &:focus, &:selected, &:hover {
+    background-color: $osd_bg_color;
+    transition-duration: 0;
   }
 }
 
@@ -1879,18 +1936,25 @@ StScrollBar {
     text-shadow: 0px 1px 2px rgba(black, 0.9);
   }
 
+  &:drop .overview-icon {
+    background-color: opacify($osd_bg_color,.2);
+  }
+
   &:active .overview-icon,
   &:checked .overview-icon,
   &:hover .overview-icon,
   &:focus .overview-icon,
   &:selected .overview-icon {
-    background-color: transparentize($osd_fg_color, .9);
-    transition-duration: 100ms;
+    background-color: opacify($osd_bg_color, .2);
+    transition-duration: 0;
     border-image: none;
     background-image: none;
     box-shadow: none;
   }
 
+  &:checked .overview-icon {
+    background-color: $osd_bg_color;
+  }
 }
 
 .app-well-app-running-dot { //running apps indicator
@@ -1910,7 +1974,7 @@ StScrollBar {
 }
 
 .app-well-app.app-folder > .overview-icon {
-  background-color: transparentize($osd_bg_color, .6);
+  background-color: opacify($osd_bg_color, .1);
 }
 
 .show-apps:checked .show-apps-icon,
@@ -1922,9 +1986,12 @@ StScrollBar {
 // Collections
 .app-folder-popup { //expanded collection
   -arrow-border-radius: 6px;
-  -arrow-background-color: transparentize($osd_bg_color, 0.7);
+  -arrow-background-color: opacify($osd_bg_color, .1);
   -arrow-base: 24px;
   -arrow-rise: 11px;
+  border: 0;
+  background: transparent;
+  margin: 0;
 }
 
 .app-folder-popup-bin {
@@ -1976,7 +2043,7 @@ StScrollBar {
 // Workspace pager
 .workspace-thumbnails { //container ala dash
   color: $light_font_color;
-  background-color: $panel_background_color;
+  background-color: $panel_background_color !important;
   border: none;
   visible-width: 32px; //amount visible before hover
   spacing: 11px;
@@ -2000,7 +2067,6 @@ StScrollBar {
 }
 
 //Some hacks I don't even
-.search-display > StBoxLayout,
 .all-apps,
 .frequent-apps > StBoxLayout {
   // horizontal padding to make sure scrollbars or dash don't overlap content
@@ -2099,7 +2165,7 @@ StScrollBar {
   -shell-counter-overlap-y: 3px;
   background-color: $color1;
   color: $selected_fg_color;
-  border: 2px solid $osd_fg_color;
+  border: 2px solid $fg_color;
   box-shadow: 0 2px 2px rgba(black, 0.5);
   border-radius: 0.9em; // should be 0.8 but whatever; wish I could do 50%;
 }
@@ -2299,7 +2365,7 @@ StScrollBar {
   color: white;
   padding: 5px;
   -arrow-border-radius: 6px;
-  -arrow-background-color: transparentize($osd_bg_color, 0.3);
+  -arrow-background-color: $bg_color;
   -arrow-border-width: 2px;
   -arrow-border-color: $secondary_color;
   -arrow-base: 20px;
@@ -2379,11 +2445,11 @@ StScrollBar {
 .user-icon, .framed-user-icon {
   background-size: contain;
   border: 0;
-  color: $osd_fg_color;
+  color: $fg_color;
   border-radius: 100px;
 
   &:hover {
-    color: lighten($osd_fg_color, 30%);
+    color: lighten($fg_color, 30%);
   }
 }
 
@@ -2526,7 +2592,7 @@ StScrollBar {
   .login-dialog-timed-login-indicator {
     height: 2px;
     margin-top: 6px;
-    background-color: $osd_fg_color;
+    background-color: $fg_color;
   }
 
   &:focus .login-dialog-timed-login-indicator {
@@ -2628,8 +2694,8 @@ StScrollBar {
   .screen-shield-notification-source {
     padding: 12px 6px;
     border: 0;
-    background-color: transparentize($osd_bg_color, 0.5);
-    color: $osd_fg_color;
+    background-color: $bg_color;
+    color: $fg_color;
     border-radius: 6px;
   }
 
