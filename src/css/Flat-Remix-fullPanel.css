@@ -782,8 +782,7 @@ StScrollBar {
   .weather-button:focus,
   .events-section-title:hover,
   .events-section-title:focus {
-    background: rgba(155, 160, 179, 0.05);
-    box-shadow: inset 0 -0.25em 0 0 #000; }
+    background: rgba(159, 176, 185, 0.15); }
   .datemenu-today-button:active,
   .world-clocks-button:active,
   .weather-button:active,
@@ -850,7 +849,7 @@ StScrollBar {
   .pager-button:active {
     background-color: #FFF;
     border-radius: 0px;
-    box-shadow: inset 0 -0.2em 0 #000; }
+    }
 
 .calendar-change-month-back {
   background-image: url("assets/calendar-arrow-left.svg");
@@ -907,11 +906,10 @@ StScrollBar {
 
 .calendar-day-with-events {
   color: #60636E;
-  box-shadow: inset 0 0 0 0.2em #000;
   font-weight: bold;
   background: #FFF; }
   .calendar-day-with-events.calendar-other-month-day {
-    box-shadow: inset 0 0 0 0.2em rgba(0, 0, 0, 0.2); }
+    color: #50555e; }
 
 .calendar-other-month-day {
   color: rgba(96, 99, 110, 0.2); }
