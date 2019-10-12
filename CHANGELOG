@@ -1,20 +1,53 @@
+[20190926]
+ * Fix blurry popup menus
+
+[20190925]
+ * Improve popup-menu margins for gnome-shell 3.34
+
+[20190918]
+ * Fix gnome-shell 3.34 colors
+ * Add folder editor styles
+ * Add folder icon visual drag-over feedback
+ * Add horizontal workspaces layout support
+ * App icon helper tweaks
+ * Increase window overview thumbnail border witdth
+ * Provide icon helper classes
+ * Don't apply overlap-preventing padding to search results
+ * Set search results content max width for gnome-shell 3.34
+ * Anotation 'UNTIL GNOME 3.32': custom styling of user submenu icon
+ * Add pie-timer styles
+ * Add ripple-pointer-location styles
+ * Support TCRYPT
+ * Move password entry to a grid
+ * Remove window-clone-border corner gap
+
+[20190829]
+ * Change lightbox background color to black
+
+[20190822]
+ * Fix transparent wifi panel button
+ * Change search-entry selected text colors
+
+[20190814]
+ * Change screenShield notification colors
+ * Add panel background transition on overview
+ * Change app menu and overview colors
+ * Remove panel background on overview
+
+[20190616]
+ * Remove .modal-dialog-linked-button inset shadow for light variant
+ * Change ScreenShield notification and app folder background
+ * Lighten .modal-dialog-linked-button inset shadow
+
+[20190608]
+ * Fix Pop OS theme conflicts; Fixes #89
+
 [20190530]
- * Remove unnecessary MODES variable
  * Remove dialog linked button focus decoration
- * Fix ubuntu ppa package, no assets symlink; Fixes #86
- * fixup! Add makefile CHANGELOG autogeneration and launchpad_release functions
- * Add FUNDING.yml
- * Add makefile CHANGELOG autogeneration and launchpad_release functions
 
 [20190514]
- * Update flat-remix-gnome.spec version 20190521
- * 20190521
- * Add login theme installation explanation
  * Use dafault login background if lock image is xml
- * Fix makefile for Pop OS
- * Convert build.sh script to posix sh
  * Bring modal-dialog shadow back
- * Update make build script
  * Fix high contrast switches
  * Syncronize switch assets with gtk theme
  * Add shadow to close icons
