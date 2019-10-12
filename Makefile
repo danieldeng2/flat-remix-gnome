@@ -14,7 +14,7 @@ THEMES := $(filter-out $(IGNORE), $(THEMES))
 
 all:
 	# skip background-sync when packaging
-	$(if $(DEB_BUILD_OPTIONS),, cd src && HOME=$$(eval echo ~$$SUDO_USER) ./build.sh --sync-login-background)
+	$(if $(DEB_BUILD_OPTIONS),, cd src && HOME=$$(eval echo ~$$SUDO_USER) ./build.sh --login-background $$(gsettings get org.gnome.desktop.background picture-uri | cut -c 9-| rev | cut -c 2- | rev))
 
 build:
 	cd src && ./build.sh -r

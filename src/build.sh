@@ -14,7 +14,7 @@ $(basename "$0") [--login-background FILE]
 
 
 TMP="/tmp/flat-remix-gnome"
-LOGIN_BACKGROUND=''
+LOGIN_BACKGROUND='$$(gsettings get org.gnome.desktop.background picture-uri | cut -c 9-| rev | cut -c 2- | rev)'
 BLUR=6
 
 while [ $# -gt 0 ]
